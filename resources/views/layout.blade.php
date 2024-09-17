@@ -41,6 +41,16 @@
                                 <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
                                 Campuses
                             </a>
+                            <form method="POST" action="{{ route('logout') }}">
+                            @csrf                    
+                            <a class="nav-link" href="route('logout')"
+                                        onclick="event.preventDefault();
+                                        this.closest('form').submit();">
+                                <div class="sb-nav-link-icon"><i class="fas fa-lock"></i></div>
+                                Logout
+                            </a>
+                            
+                            </form>
                         </div>
                     </div>
                     <!-- <div class="sb-sidenav-footer">
