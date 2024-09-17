@@ -17,7 +17,7 @@
                             </ul>
                         </div>
                     @endif
-                    <form action="{{ route('students.update', $student->id) }}" method="POST">
+                    <form action="{{ route('panel.students.update', $student->id) }}" method="POST">
                         @csrf
                         @method('PUT')
                         <div>
@@ -31,6 +31,14 @@
                         <div>
                         <label>Last Name </label>
                         <input type="text" name="last_name" value="{{ $student->last_name }}" class="form-control">
+                        </div>
+                        <div>
+                            <label for="">Course</label>
+                            <select name="course_id" id="course_id" class="form-control">
+                                @foreach($courses as $course)
+                                <option value="{{$course->id}}">{{$course->course_name}}</option>
+                                @endforeach
+                            </select>
                         </div>
                         <button type="submit" class="btn btn-info">Update</button>
                     </form>
