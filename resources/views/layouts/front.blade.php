@@ -12,19 +12,12 @@
         <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet" />
         <!-- Core theme CSS (includes Bootstrap)-->
         <link href="{{asset('css/front.css') }}" rel="stylesheet" />
+        <link href="{{asset('css/custom.css') }}" rel="stylesheet" />
         <script src='https://api.mapbox.com/mapbox-gl-js/v2.15.0/mapbox-gl.js'></script>
         <link href='https://api.mapbox.com/mapbox-gl-js/v2.15.0/mapbox-gl.css' rel='stylesheet' />
 
         <!-- <link href="https://api.mapbox.com/mapbox-gl-js/v3.6.0/mapbox-gl.css" rel="stylesheet">
         <script src="https://api.mapbox.com/mapbox-gl-js/v3.6.0/mapbox-gl.js"></script> -->
-        <style type="text/css">
-            #map {
-            min-height: 1000px;
-            height: auto;
-            width: 100%;
-            }
-
-        </style>
         @yield('scripts')
     </head>
     <body class="d-flex flex-column h-100">
@@ -51,7 +44,7 @@
         </main>
       
         <!-- Footer-->
-        <footer class="bg-dark py-4 mt-auto">
+        <footer class="bg-dark py-4">
             <div class="container px-5">
                 <div class="row align-items-center justify-content-between flex-column flex-sm-row">
                     <div class="col-auto"><div class="small m-0 text-white">Copyright &copy; {{config('app.name')}}</div></div>

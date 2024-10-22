@@ -22,7 +22,8 @@ class Student extends Model
         'longitude',
         'campus_id',
         'year',
-        'status'
+        'status',
+        'scholarship_id'
     ];
 
     public function course_details(): BelongsTo{
@@ -30,5 +31,8 @@ class Student extends Model
     }
     public function campus_details(): BelongsTo{
         return $this->belongsTo(Campus::class, 'campus_id', 'id');
+    }
+    public function scholarship_details(): BelongsTo{
+        return $this->belongsTo(Scholarship::class, 'scholarship_id', 'id');
     }
 }

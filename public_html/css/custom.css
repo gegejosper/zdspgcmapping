@@ -1,0 +1,31 @@
+.sb-nav-link-text {
+    margin-left:2px;
+}
+#map {
+min-height: 800px;
+height: auto;
+width: 100%;
+}
+.c-layout-header .c-brand {
+    margin: 10px 0 37px 0;
+}
+    /* More specific selector */
+.mapboxgl-popup .mapboxgl-popup-content {
+    max-width: 500px !important;
+    min-width: 400px !important;
+    padding: 10px !important;
+}
+#map-dashboard {
+    min-height: 1000px;
+    height: auto;
+    width: 100%;
+    }
+
+.mapboxgl-popup-content {
+    max-height: 500px; /* Set your desired maximum height */
+    overflow-y: auto; /* Enable vertical scrolling */
+    overflow-x: hidden; /* Prevent horizontal scrolling */
+}
+.c-layout-footer-6 {
+    padding-top: 0px;
+}

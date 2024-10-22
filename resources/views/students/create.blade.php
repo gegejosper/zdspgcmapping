@@ -1,4 +1,4 @@
-@extends('layout')
+@extends('layouts.layout')
 @section('content')
 <div id="layoutSidenav_content">
     <main>
@@ -42,7 +42,56 @@
                                     </select>
                                 </div>
                             </div>
-                            <button type="submit" class="btn btn-info">Create</button>
+                            <div class="row  mt-5">
+                                <div class="col-lg-3">
+                                    <label>Address </label>
+                                    <input type="text" name="address" value="{{ old('address') }}" class="form-control">
+                                </div>
+                                <div class="col-lg-3">
+                                    <label>Municipality</label>
+                                    <input type="text" name="municipality" value="{{ old('municipality') }}" class="form-control">
+                                </div>
+                                <div class="col-lg-3">
+                                    <label>Province</label>
+                                    <input type="text" name="province" value="{{ old('province') }}" class="form-control">
+                                </div>
+                                <div class="col-lg-3">
+                                    <label for="">Year Level</label>
+                                    <select name="year" id="year" class="form-control">
+                                        <option value="1st Year">1st Year</option>
+                                        <option value="2nd Year">2nd Year</option>
+                                        <option value="3rd Year">3rd Year</option>
+                                        <option value="4th Year">4th Year</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="row mt-5">
+                                <div class="col-lg-3">
+                                    <label for="">Scholarship</label>
+                                    <select name="scholarship_id" id="scholarship_id" class="form-control">
+                                        <option value="0">NONE</option>
+                                        @foreach($scholarships as $scholarship)
+                                        <option value="{{$scholarship->id}}">{{$scholarship->scholarship_name}}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                                <div class="col-lg-3">
+                                    <label for="">Campus</label>
+                                    <select name="campus_id" id="campus_id" class="form-control">
+                                        @foreach($campuses as $campus)
+                                        <option value="{{$campus->id}}">{{$campus->campus_name}}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                                <div class="col-lg-3">
+                                    <label for="">Status</label>
+                                    <select name="status" id="status" class="form-control">
+                                        <option value="Active">Active</option>
+                                        <option value="Inactive">Inactive</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <button type="submit" class="btn btn-info mt-5">Create</button>
                         </form>
                     </div>
             </div>

@@ -1,4 +1,4 @@
-@extends('layout')
+@extends('layouts.layout')
 @section('content')
 <div id="layoutSidenav_content">
     <main>
@@ -23,19 +23,27 @@
                         <table class="table datatable-table">
                             <tr>
                                 <td>ID</td>
-                                <td>FIRST NAME</td>
-                                <td>MIDDLE NAME</td>
-                                <td>LAST NAME</td>
+                                <td>NAME</td>
+                                <td>ADDRESS</td>
+                                <td>SCHOLARSHIPS</td>
                                 <td>COURSE</td>
+                                <td>CAMPUS</td>
+                                <td>STATUS</td>
                                 <td>ACTION</td>
                             </tr>
                             @foreach($students as $student)
                                 <tr>
                                     <td>{{$student->id}}</td>
-                                    <td>{{$student->first_name}}</td>
-                                    <td>{{$student->middle_name}}</td>
-                                    <td>{{$student->last_name}}</td>
+                                    <td>{{$student->last_name}}, {{$student->first_name}} {{$student->middle_name}}</td>
+                                    <td>{{$student->address}}, {{$student->municipality}}, {{$student->province}}</td>
+                                    @if($student->scholarship_details != null)
+                                        <td>{{$student->scholarship_details->scholarship_name}}</td>
+                                        @else
+                                        <td>NONE</td>
+                                    @endif
                                     <td>{{$student->course_details->course_name}}</td>
+                                    <td>{{$student->campus_details->campus_name}}</td>
+                                    <td>{{$student->status}}</td>
                                     <td>
                                         <a class="btn btn-success" href="{{route ('panel.students.show', $student->id) }}"><i class="fa fa-search"> </i></a>
                                         <a class="btn btn-warning" href="{{route ('panel.students.edit', $student->id) }}"><i class="fa fa-pencil"> </i></a>

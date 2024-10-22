@@ -1,4 +1,4 @@
-@extends('layout')
+@extends('layouts.layout')
 @section('content')
 <div id="layoutSidenav_content">
     <main>
@@ -42,6 +42,83 @@
                     </div>
                 </div>
             </div>
+            <div class="row">
+                <div class="col-lg-8">
+                    <div id="map-dashboard"></div>
+                </div>
+            </div>
         </div>
     </main>
+    
+@endsection
+@section('scripts')
+<script>
+        mapboxgl.accessToken = 'pk.eyJ1IjoiZ2VnZWpvc3BlciIsImEiOiJja3Flb3dxM2cwam40MnBxdmUyZ3ptd2d4In0.gtM2xu-epJ56CCUUHbuU0A';
+
+        // Function to initialize the map
+        function init_map() {
+            const coordinates = [123.625389, 7.931833];  // Example coordinates [longitude, latitude]
+
+            const map = new mapboxgl.Map({
+                container: 'map-dashboard',
+                style: 'mapbox://styles/mapbox/satellite-streets-v11',
+                zoom: 9,
+                center: coordinates, // Center the map on the coordinates
+                projection: 'mercator' // Use 'mercator' or another supported projection
+            });
+
+            // Add markers for locations with custom colors
+            const campuses = @json($campuses);
+
+            // Transform the data to the desired format
+            const locations = campuses.map(campus => ({
+                name: campus.address,
+                color: campus.map_color,
+                campus: campus.campus_name.toUpperCase()
+            }));
+            locations.forEach(function (location) {
+                geocode_location(location, map);
+            });
+        }
+
+        // Function to geocode the location and add markers with custom colors
+        function geocode_location(location, map) {
+            const geocoding_url = `https://api.mapbox.com/geocoding/v5/mapbox.places/${encodeURIComponent(location.name)}.json?access_token=${mapboxgl.accessToken}`;
+
+            fetch(geocoding_url)
+                .then(response => response.json())
+                .then(data => {
+                    const coordinates = data.features[0].center;
+
+                    // Create a popup with location details
+                    const popup = new mapboxgl.Popup({ offset: 25 })
+                        .setHTML(`
+                        <div id="popup-content">
+                            <h3>${location.campus}</h3>
+                            <p>Population: <strong>1, 000</strong><br>
+                            BSIS: <strong>500</strong><br>
+                            BSA: <strong>300</strong><br>
+                            Scholars: <strong>800</strong></p>
+                        </div>
+                        `)
+                        .on('open', () => {
+                        // Access the popup content and apply styles
+                        const popup_content = document.querySelector('#popup-content');
+                        popup_content.style.minWidth = '500px';
+                        popup_content.style.maxWidth = '600px';
+                    });;
+
+                    // Create a marker with a custom color and attach the popup to it
+                    const marker = new mapboxgl.Marker({
+                        color: location.color // Use the custom color for the marker
+                    })
+                    .setLngLat(coordinates)
+                    .setPopup(popup) // Attach the popup to the marker
+                    .addTo(map);
+                })
+                .catch(error => console.error('Error with geocoding:', error));
+        }
+
+        document.addEventListener('DOMContentLoaded', init_map);
+</script>
 @endsection

@@ -6,6 +6,8 @@ use App\Models\School;
 use Illuminate\Http\Request;
 use App\Models\Student;
 use App\Models\Course;
+use App\Models\Campus;
+use App\Models\Scholarship;
 
 class StudentController extends Controller
 {
@@ -25,7 +27,9 @@ class StudentController extends Controller
     public function create()
     {
         $courses = Course::where('status', 'active')->get();
-        return view('students.create', compact('courses'));
+        $campuses = Campus::get();
+        $scholarships = Scholarship::where('status', 'active')->get();
+        return view('students.create', compact('courses', 'scholarships', 'campuses'));
     }
 
     /**
@@ -35,12 +39,18 @@ class StudentController extends Controller
     {
         $request->validate([
             'first_name' => 'required',
-            'middle_name' => 'required',
+            'municipality' => 'required',
             'last_name' => 'required',
+            'province' => 'required',
+            'course_id' => 'required',
+            'campus_id' => 'required',
+            'scholarship_id' => 'required',
+            'year' => 'required',
+            'status' => 'required',
         ]);
 
         Student::create($request->all());
-        return redirect()->route('students.index')->with('success', 'Student created succesfully');
+        return redirect()->route('panel.students.index')->with('success', 'Student created succesfully');
     }
 
     /**
@@ -57,7 +67,9 @@ class StudentController extends Controller
     public function edit(Student $student)
     {
         $courses = Course::where('status', 'active')->get();
-        return view('students.edit', compact('student', 'courses'));
+        $campuses = Campus::get();
+        $scholarships = Scholarship::where('status', 'active')->get();
+        return view('students.edit', compact('student', 'courses',  'scholarships', 'campuses'));
     }
 
     /**
@@ -67,14 +79,33 @@ class StudentController extends Controller
     {
         $request->validate([
             'first_name' => 'required',
-            'middle_name' => 'required',
+            'municipality' => 'required',
             'last_name' => 'required',
-            'course_id' => 'required'
+            'province' => 'required',
+            'course_id' => 'required',
+            'campus_id' => 'required',
+            'scholarship_id' => 'required',
+            'year' => 'required',
+            'status' => 'required',
         ]);
 
-        $student->update($request->only(['first_name', 'middle_name', 'last_name', 'course_id']));
+        $student->update($request->only(
+            [
+                'first_name', 
+                'middle_name', 
+                'last_name', 
+                'course_id', 
+                'municipality',
+                'province',
+                'campus_id',
+                'scholarship_id',
+                'year',
+                'status',
+                'address'
 
-        return redirect()->route('students.index')->with('success', 'Student updated successfully.');
+            ]));
+
+        return redirect()->route('panel.students.index')->with('success', 'Student updated successfully.');
     }
 
     /**
@@ -85,6 +116,6 @@ class StudentController extends Controller
         //
         $student->delete();
 
-        return redirect()->route('students.index')->with('success', 'Student deleted successfully.');
+        return redirect()->route('panel.students.index')->with('success', 'Student deleted successfully.');
     }
 }

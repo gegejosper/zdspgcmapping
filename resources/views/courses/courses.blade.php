@@ -1,4 +1,4 @@
-@extends('layout')
+@extends('layouts.layout')
 @section('content')
 <div id="layoutSidenav_content">
     <main>
@@ -35,10 +35,10 @@
                                     <td>
                                         <a class="btn btn-success" href="{{route ('panel.courses.show', $course->id) }}"><i class="fa fa-search"> </i></a>
                                         <a class="btn btn-warning" href="{{route ('panel.courses.edit', $course->id) }}"><i class="fa fa-pencil"> </i></a>
-                                        <form action="{{ route('panel.courses.destroy', $course->id) }}" method="POST" style="display:inline;">
+                                        <!-- <form action="{{ route('panel.courses.destroy', $course->id) }}" method="POST" style="display:inline;">
                                             @csrf
                                             @method('DELETE')
-                                            <button type="submit" class="btn btn-danger"><i class="fa fa-times"> </i></button>
+                                            <button type="submit" class="btn btn-danger"><i class="fa fa-times"> </i></button> -->
                                         </form>
                                     </td>
                                 </tr>

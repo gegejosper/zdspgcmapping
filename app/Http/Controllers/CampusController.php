@@ -40,7 +40,7 @@ class CampusController extends Controller
         ]);
 
         Campus::create($request->all());
-        return redirect()->route('campuses.index')->with('success', 'Campus created succesfully');
+        return redirect()->route('panel.campuses.index')->with('success', 'Campus created succesfully');
     }
 
     /**
@@ -75,7 +75,7 @@ class CampusController extends Controller
 
         $campus->update($request->only(['course_name', 'address', 'map_color']));
 
-        return redirect()->route('campuses.index')->with('success', 'Campus updated successfully.');
+        return redirect()->route('panel.campuses.index')->with('success', 'Campus updated successfully.');
     }
 
     /**
@@ -85,6 +85,6 @@ class CampusController extends Controller
     {
         $campus->delete();
 
-        return redirect()->route('campuses.index')->with('success', 'Campus deleted successfully.');
+        return redirect()->route('panel.campuses.index')->with('success', 'Campus deleted successfully.');
     }
 }
