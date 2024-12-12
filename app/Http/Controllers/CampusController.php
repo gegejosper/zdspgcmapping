@@ -46,10 +46,7 @@ class CampusController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Campus $campus)
-    {
-        //dd($campus);
-        //$campus = Campus::find($id)->dd();
+    public function show(Campus $campus){
         $students = Student::where('campus_id', $campus->id)->get();
         return view('campuses.campus', compact('campus', 'students'));
     }

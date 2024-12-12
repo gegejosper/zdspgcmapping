@@ -8,6 +8,7 @@
                 <li class="breadcrumb-item active">Fill Details</li>   
             </ol>
             <div class="card">
+            
                     @if ($errors->any())
                         <div class="alert alert-danger">
                             <ul>
@@ -55,7 +56,7 @@
                                     <label>Province</label>
                                     <input type="text" name="province" value="{{ old('province') }}" class="form-control">
                                 </div>
-                                <div class="col-lg-3">
+                                <!-- <div class="col-lg-3">
                                     <label for="">Year Level</label>
                                     <select name="year" id="year" class="form-control">
                                         <option value="1st Year">1st Year</option>
@@ -63,9 +64,7 @@
                                         <option value="3rd Year">3rd Year</option>
                                         <option value="4th Year">4th Year</option>
                                     </select>
-                                </div>
-                            </div>
-                            <div class="row mt-5">
+                                </div> -->
                                 <div class="col-lg-3">
                                     <label for="">Scholarship</label>
                                     <select name="scholarship_id" id="scholarship_id" class="form-control">
@@ -75,6 +74,9 @@
                                         @endforeach
                                     </select>
                                 </div>
+                            </div>
+                            <div class="row mt-5">
+                                
                                 <div class="col-lg-3">
                                     <label for="">Campus</label>
                                     <select name="campus_id" id="campus_id" class="form-control">
@@ -83,16 +85,19 @@
                                         @endforeach
                                     </select>
                                 </div>
-                                <div class="col-lg-3">
+                                <!-- <div class="col-lg-3">
                                     <label for="">Status</label>
                                     <select name="status" id="status" class="form-control">
                                         <option value="Active">Active</option>
                                         <option value="Inactive">Inactive</option>
                                     </select>
-                                </div>
+                                </div> -->
                             </div>
+                            <input type="hidden" name="year" value="1st Year">
+                            <input type="hidden" name="status" value="active">
                             <button type="submit" class="btn btn-info mt-5">Create</button>
                         </form>
+                        
                     </div>
             </div>
         </div>

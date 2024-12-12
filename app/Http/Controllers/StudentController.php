@@ -8,6 +8,8 @@ use App\Models\Student;
 use App\Models\Course;
 use App\Models\Campus;
 use App\Models\Scholarship;
+use Maatwebsite\Excel\Facades\Excel;
+use App\Imports\StudentsImport;
 
 class StudentController extends Controller
 {
@@ -16,7 +18,9 @@ class StudentController extends Controller
      */
     public function index()
     {
-        $students = Student::with('course_details')->get();
+        $students = Student::orderBy('last_name', 'asc')
+                        ->orderBy('first_name', 'asc')
+                        ->with('course_details')->paginate(200);
        //dd($students);
         return view('students.students', compact('students'));
     }
@@ -118,4 +122,15 @@ class StudentController extends Controller
 
         return redirect()->route('panel.students.index')->with('success', 'Student deleted successfully.');
     }
+    public function import(Request $request)
+    {
+        $request->validate([
+            'file' => 'required|mimes:xlsx,xls,csv',
+        ]);
+
+        Excel::import(new StudentsImport, $request->file('file'));
+
+        return back()->with('success', 'Students imported successfully!');
+    }
+    
 }

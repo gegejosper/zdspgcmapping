@@ -13,9 +13,10 @@
         <!-- Core theme CSS (includes Bootstrap)-->
         <link href="{{asset('css/front.css') }}" rel="stylesheet" />
         <link href="{{asset('css/custom.css') }}" rel="stylesheet" />
-        <script src='https://api.mapbox.com/mapbox-gl-js/v2.15.0/mapbox-gl.js'></script>
-        <link href='https://api.mapbox.com/mapbox-gl-js/v2.15.0/mapbox-gl.css' rel='stylesheet' />
-
+        <script src="https://api.mapbox.com/mapbox-gl-js/v2.10.0/mapbox-gl.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/Turf.js/6.5.0/turf.min.js"></script>
+        <link href="https://api.mapbox.com/mapbox-gl-js/v2.10.0/mapbox-gl.css" rel="stylesheet" />
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
         <!-- <link href="https://api.mapbox.com/mapbox-gl-js/v3.6.0/mapbox-gl.css" rel="stylesheet">
         <script src="https://api.mapbox.com/mapbox-gl-js/v3.6.0/mapbox-gl.js"></script> -->
         @yield('scripts')
@@ -31,7 +32,7 @@
                     <div class="collapse navbar-collapse" id="navbarSupportedContent">
                         <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
                             <li class="nav-item"><a class="nav-link" href="/">Home</a></li>
-                            <li class="nav-item"><a class="nav-link" href="/campus">Campus</a></li>
+                            <li class="nav-item"><a class="nav-link" href="/campuses">Campus</a></li>
                             <li class="nav-item"><a class="nav-link" href="/statistics">Statistics</a></li>
                             
                         </ul>
@@ -64,5 +65,6 @@
         <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
         <script src="{{ asset('js/scripts.js') }}"></script>
         <script src="{{ asset('js/welcome.js') }}"></script>
+        @yield('footer_scripts')
     </body>
 </html>

@@ -12,4 +12,7 @@ class Course extends Model
         'course_name',
         'status',
     ];
+    public function accounts_list(){
+        return $this->hasMany('App\Models\AccountList', 'account_id', 'id');
+    }
 }

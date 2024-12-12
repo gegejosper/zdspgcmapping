@@ -3,41 +3,69 @@
 <div id="layoutSidenav_content">
     <main>
         <div class="container-fluid px-4">
-            <h1 class="mt-4">Update Scholarship</h1>
-            <ol class="breadcrumb mb-4">
-                <li class="breadcrumb-item active">Fill Details</li>   
-            </ol>
-            <div class="row">
-                <div class="col-lg-4">
-                    <div class="card p-4">
+            <!-- Page Header -->
+            <div class="d-flex justify-content-between align-items-center mt-4 mb-3">
+                <div>
+                    <h1 class="h2">Update Scholarship</h1>
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item">
+                            <a href="/panel/dashboard" class="text-decoration-none">Dashboard</a>
+                        </li>
+                        <li class="breadcrumb-item">
+                            <a href="{{ route('panel.scholarships.index') }}" class="text-decoration-none">Scholarships</a>
+                        </li>
+                        <li class="breadcrumb-item active">Update Scholarship</li>
+                    </ol>
+                </div>
+            </div>
+
+            <!-- Form Section -->
+            <div class="row justify-content-center">
+                <div class="col-lg-6">
+                    <div class="card shadow p-4">
+                        <!-- Error Handling -->
                         @if ($errors->any())
                             <div class="alert alert-danger">
-                                <ul>
+                                <ul class="mb-0">
                                     @foreach ($errors->all() as $error)
                                         <li>{{ $error }}</li>
                                     @endforeach
                                 </ul>
                             </div>
                         @endif
+
+                        <!-- Update Form -->
                         <form action="{{ route('panel.scholarships.update', $scholarship->id) }}" method="POST">
                             @csrf
                             @method('PUT')
-                            <div>
-                                <div class="input-group mb-2">
-                                    <label class="p-2 col-lg-4">Scholarship Name: </label>
-                                    <div class="col-lg-8">
-                                        <input type="text" name="scholarship_name" class="form-control" value="{{ $scholarship->scholarship_name }}">
+
+                            <!-- Scholarship Name -->
+                            <div class="mb-3">
+                                <label for="scholarship_name" class="form-label">Scholarship Name</label>
+                                <input 
+                                    type="text" 
+                                    id="scholarship_name" 
+                                    name="scholarship_name" 
+                                    class="form-control @error('scholarship_name') is-invalid @enderror" 
+                                    value="{{ old('scholarship_name', $scholarship->scholarship_name) }}" 
+                                    required>
+                                @error('scholarship_name')
+                                    <div class="invalid-feedback">
+                                        {{ $message }}
                                     </div>
-                                </div>
+                                @enderror
                             </div>
-                        
-                            <hr>
-                            <button type="submit" class="btn btn-info">Update</button>
+
+                            <!-- Submit Button -->
+                            <div class="text-end">
+                                <button type="submit" class="btn btn-info">
+                                    <i class="fa fa-save me-2"></i> Update Scholarship
+                                </button>
+                            </div>
                         </form>
                     </div>
                 </div>
             </div>
-            
         </div>
     </main>
 @endsection
