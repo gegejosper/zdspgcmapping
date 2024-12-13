@@ -68,7 +68,7 @@ class CourseController extends Controller
 
         $course->update($request->only(['course_name', 'status']));
 
-        return redirect()->route('courses.index')->with('success', 'Course updated successfully.');
+        return redirect()->route('panel.courses.index')->with('success', 'Course updated successfully.');
     }
 
     /**
