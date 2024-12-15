@@ -180,10 +180,9 @@ class FrontController extends Controller
             return $item->municipality . ', ' . $item->province;
         })->map->count();
 
-        // Prepare data for Chart.js
         $course_labels = $courses->keys()->map(function($course_id) {
-            $course =  Course::find($course_id)->course_name; // Assuming you have a name field in Course model
-            return $course ? $course->course : 'Unknown Course'; // Use fallback if not found
+            $course = Course::find($course_id); // Retrieve the Course model
+            return $course ? $course->course_name : 'Unknown Course'; // Use fallback if not found
         });
         $course_data = $courses->values();
 
