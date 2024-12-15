@@ -215,8 +215,10 @@
         @endphp
         @foreach($campuses as $campus => $campus_group)
             @php
+                $first_campus = $campus_group->first();
+                
                 $campus_data = [
-                    'campus_name' => $campus_group->first()->campus_details->campus_name,
+                    'campus_name' => $first_campus?->campus_details?->campus_name ?? 'Unknown Campus',
                     'campus_count' => $campus_group->count(),
                     'programs' => [],
                     'scholarships' => []
