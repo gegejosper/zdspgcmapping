@@ -165,8 +165,13 @@ class FrontController extends Controller
 
         $campus = $students->groupBy('campus_id')->map->count();
 
+        // $campus_labels = $campus->keys()->map(function($campus_id) {
+        //     return Campus::find($campus_id)->campus_name; // Assuming Campus has a 'name' field
+        // });
+
         $campus_labels = $campus->keys()->map(function($campus_id) {
-            return Campus::find($campus_id)->campus_name; // Assuming Campus has a 'name' field
+            $campus = Campus::find($campus_id); // Retrieve the Campus model
+            return $campus ? $campus->campus_name : 'Unknown Campus'; // Use fallback if not found
         });
         $campus_data = $campus->values();
 
