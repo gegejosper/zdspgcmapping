@@ -35,16 +35,17 @@
                                         <input type="text" name="address" value="{{ $campus->address }}" class="form-control">
                                     </div>
                                 </div>
-                                <div class="input-group mb-2">
+                                <!-- <div class="input-group mb-2">
                                     <label class="p-2 col-lg-4">Color: </label>
                                     <div class="col-lg-4">
                                         <input type="color" name="map_color" value="{{ $campus->map_color }}" class="form-control">
                                     </div>
-                                </div>
+                                </div> -->
                             
                             </div>
                         
                             <hr>
+                            <input type="hidden" name="map_color" value="{{ $campus->map_color }}" class="form-control">
                             <button type="submit" class="btn btn-info">Update</button>
                         </form>
                     </div>

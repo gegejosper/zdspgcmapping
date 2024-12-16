@@ -34,13 +34,14 @@
                                     <input type="text" name="address" value="{{ old('address') }}" class="form-control" placeholder="Please enter campus address">
                                 </div>
                             </div>
-                            <div class="input-group mb-2">
+                            <!-- <div class="input-group mb-2">
                                 <label class="p-2 col-lg-3">Map Color: </label>
                                 <div class="col-lg-9">
                                     <input type="color" name="map_color" value="{{ old('map_color') }}" class="form-control">
                                 </div>
-                            </div> 
+                            </div>  -->
                             <input type="hidden" name="status" value="active">
+                            <input type="hidden" name="map_color" value="#000000" class="form-control">
                             <hr>
                             <button type="submit" class="btn btn-info">Create</button>
                         </form>

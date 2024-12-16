@@ -42,7 +42,7 @@
                                 <th scope="col">ID</th>
                                 <th scope="col">Name</th>
                                 <th scope="col">Address</th>
-                                <th scope="col">Map Color</th>
+                                <!-- <th scope="col">Map Color</th> -->
                                 <th scope="col" class="text-center">Action</th>
                             </tr>
                         </thead>
@@ -52,11 +52,11 @@
                                 <td>{{ $campus->id }}</td>
                                 <td>{{ $campus->campus_name }}</td>
                                 <td>{{ $campus->address }}</td>
-                                <td>
+                                <!-- <td>
                                     <span class="badge" style="background-color: {{ $campus->map_color }};">
                                         {{ $campus->map_color }}
                                     </span>
-                                </td>
+                                </td> -->
                                 <td class="text-center">
                                     <a href="{{ route('panel.campuses.show', $campus->id) }}" class="btn btn-sm btn-success me-2">
                                         <i class="fa fa-search"></i> View
