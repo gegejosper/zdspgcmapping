@@ -59,13 +59,13 @@
                                     <a href="{{ route('panel.students.edit', $student->id) }}" class="btn btn-sm btn-warning me-2">
                                         <i class="fa fa-pencil"></i> Edit
                                     </a>
-                                    <form action="{{ route('panel.students.destroy', $student->id) }}" method="POST" style="display:inline;">
+                                    <!-- <form action="{{ route('panel.students.destroy', $student->id) }}" method="POST" style="display:inline;">
                                         @csrf
                                         @method('DELETE')
                                         <button type="submit" class="btn btn-sm btn-danger">
                                             <i class="fa fa-times"></i> Delete
                                         </button>
-                                    </form>
+                                    </form> -->
                                 </td>
                             </tr>
                             @empty
