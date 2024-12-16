@@ -14,6 +14,41 @@ class StudentsImport implements ToModel
     */
     public function model(array $row)
     {
+        // return new Student([
+        //     'first_name'     => $row[0],
+        //     'last_name'      => $row[1],
+        //     'middle_name'    => $row[2] ?? null,
+        //     'address'        => $row[3] ?? null,
+        //     'municipality'   => $row[4],
+        //     'province'       => $row[5],
+        //     'region'         => $row[6] ?? null,
+        //     'latitude'       => null,
+        //     'longitude'      => null,
+        //     'course_id'      => $row[7],
+        //     'campus_id'      => $row[8],
+        //     'scholarship_id' => $row[9],
+        //     'year'           => '1st Year',
+        //     'status'         => 'active',
+        // ]);
+
+        $existing_student = Student::where([
+            ['first_name', $row[0]],
+            ['last_name', $row[1]],
+            ['middle_name', $row[2] ?? null],
+            ['municipality', $row[4]],
+            ['province', $row[5]],
+            ['region', $row[6] ?? null],
+            ['course_id', $row[7]],
+            ['campus_id', $row[8]],
+            ['scholarship_id', $row[9]],
+        ])->first();
+        
+        if ($existing_student) {
+            // Return a message or handle the duplicate record logic here
+            return null; // or you can log, skip, or throw an exception
+        }
+        
+        // If no existing student is found, create a new one
         return new Student([
             'first_name'     => $row[0],
             'last_name'      => $row[1],
@@ -22,11 +57,11 @@ class StudentsImport implements ToModel
             'municipality'   => $row[4],
             'province'       => $row[5],
             'region'         => $row[6] ?? null,
-            'latitude'       => $row[7] ?? null,
-            'longitude'      => $row[8] ?? null,
-            'course_id'      => $row[9],
-            'campus_id'      => $row[10],
-            'scholarship_id' => $row[11],
+            'latitude'       => null,
+            'longitude'      => null,
+            'course_id'      => $row[7],
+            'campus_id'      => $row[8],
+            'scholarship_id' => $row[9],
             'year'           => '1st Year',
             'status'         => 'active',
         ]);
