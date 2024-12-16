@@ -106,11 +106,11 @@
                                     <td>
                                         <!-- <a class="btn btn-success" href="{{route ('panel.students.show', $student->id) }}"><i class="fa fa-search"> </i></a> -->
                                         <a class="btn btn-warning" href="{{route ('panel.students.edit', $student->id) }}"><i class="fa fa-pencil"> </i></a>
-                                        <form action="{{ route('panel.students.destroy', $student->id) }}" method="POST" style="display:inline;">
+                                        <!-- <form action="{{ route('panel.students.destroy', $student->id) }}" method="POST" style="display:inline;">
                                             @csrf
                                             @method('DELETE')
                                             <button type="submit" class="btn btn-danger"><i class="fa fa-times"> </i></button>
-                                        </form>
+                                        </form> -->
                                     </td>
                                 </tr>
                                 <?php $count += 1; ?>
