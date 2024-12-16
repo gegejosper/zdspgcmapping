@@ -56,9 +56,9 @@
                                 <td>{{ $student->last_name }}</td>
                                 <td>{{ $student->campus_details->campus_name }}</td>
                                 <td class="text-center">
-                                    <a href="{{ route('panel.students.show', $student->id) }}" class="btn btn-sm btn-success me-2">
+                                    <!-- <a href="{{ route('panel.students.show', $student->id) }}" class="btn btn-sm btn-success me-2">
                                         <i class="fa fa-search"></i> View
-                                    </a>
+                                    </a> -->
                                     <a href="{{ route('panel.students.edit', $student->id) }}" class="btn btn-sm btn-warning me-2">
                                         <i class="fa fa-pencil"></i> Edit
                                     </a>

@@ -10,7 +10,7 @@
             <h1>{{ $student->first_name }}</h1>
             <p>{{ $student->middle_name }}</p>
             <p>{{ $student->last_name }}</p>
-            <a href="{{ route('students.index') }}">Back to Student List</a>
+            <a href="{{ route('panel.students.index') }}">Back to Student List</a>
         </div>
     </main>
 @endsection
