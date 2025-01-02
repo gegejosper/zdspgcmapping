@@ -191,7 +191,7 @@
             </div>
         </div>
     </main>
-    <div id="location-modal" class="modal modal-xl" style="margin-top:100px; max-height: 500px;" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div id="location-modal" class="modal modal-xl" style="margin-top:100px; max-height: 700px;" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable"> 
             <div class="modal-content">
                 <div class="modal-header">
@@ -203,38 +203,12 @@
             </div>
         </div>
     </div>
-    @foreach($students as $location => $student_group)
-        @php
-            $location_data = [
-                'address' => $location,
-                'address_count' => $student_group->count(),
-                'campuses' => []
-            ];
-
-            $campuses = $student_group->groupBy('campus_id');
-        @endphp
-        @foreach($campuses as $campus => $campus_group)
-            @php
-                $first_campus = $campus_group->first();
-                
-                $campus_data = [
-                    'campus_name' => $first_campus?->campus_details?->campus_name ?? 'Unknown Campus',
-                    'campus_count' => $campus_group->count(),
-                    'programs' => [],
-                    'scholarships' => []
-                ];
-
-                $location_data['campuses'][] = $campus_data;
-            @endphp
-        @endforeach
-
-        @php 
-            $locations_list[] = $location_data;
-        @endphp
-    @endforeach
+    
 @endsection
-@section('scripts')
+@section('footer_scripts')
 <script>
+    const locations_admin = @json($locations_list);
+    console.log(locations_admin);
     async function get_coordinates(address) {
         const response = await fetch(`https://api.mapbox.com/geocoding/v5/mapbox.places/${encodeURIComponent(address)}.json?access_token=${mapbox_token}`);
         const data = await response.json();
@@ -267,7 +241,7 @@
         });
     }
     document.addEventListener('DOMContentLoaded', function() {
-        const locations = @json($locations_list);
+        //const locations = @json($locations_list);
         //console.log(locations);
         const campus_address = "{{ $main_address }}";
         let selected_campus_coordinates;
@@ -280,7 +254,7 @@
             .catch((error) => {
                 console.error("Error fetching coordinates:", error);
             });
-        console.log(selected_campus_coordinates);
+        //console.log(selected_campus_coordinates);
         mapboxgl.accessToken = 'pk.eyJ1IjoiZ2VnZWpvc3BlciIsImEiOiJja3Flb3dxM2cwam40MnBxdmUyZ3ptd2d4In0.gtM2xu-epJ56CCUUHbuU0A'; // Add your Mapbox token here
         const map = new mapboxgl.Map({
             container: 'map', // ID of the HTML element
@@ -290,7 +264,7 @@
         });
         
         //console.log(selected_campus_coordinates);
-        locations.forEach(function (location) {
+        locations_admin.forEach(function (location) {
             geocode_location(location, map, 'red');
         });
 
@@ -348,6 +322,7 @@
 
     function create_popup_content(location) {
         let content = `<div class="row">`;
+        //console.log(location);
         location.campuses.forEach(campus => {
             content += `<div class="col-lg-4 mb-2">
                         <div class="card"><div class="card-header">Campus: ${campus.campus_name} - (${campus.campus_count})</div><div class="card-body">
@@ -368,6 +343,7 @@
     }
 
     function show_modal(location) {
+        //console.log(location);
         const modal = document.getElementById("location-modal");
         const modalBody = document.getElementById("modal-body");
         const modalTitle = document.getElementById("modal-title");
@@ -394,17 +370,27 @@
     // The starting address for Aurora, Zamboanga del Sur
     //const aurora_address = {{$main_address}};
     const aurora_address = "{{ $main_address }}";
-    const locations = @json($locations_list);
 
+    //console.log(selected_campus_coordinates);
+    // Example locations array
+    // const locations = [
+    //     { address: 'Aurora, Zamboanga del Sur', address_count: 50, campuses: Array(4) },
+    //     { address: 'San Miguel, Zamboanga del Sur', address_count: 52, campuses: Array(3) },
+    //     { address: 'Molave, Zamboanga del Sur', address_count: 48, campuses: Array(3) },
+    //     { address: 'Pagadian, Zamboanga del Sur', address_count: 61, campuses: Array(3) },
+    //     { address: 'San Pablo, Zamboanga del Sur', address_count: 70, campuses: Array(3) },
+    //     { address: 'Dumingag, Zamboanga del Sur', address_count: 53, campuses: Array(3) },
+    // ];
+    
     // Function to get coordinates using Mapbox Geocoding API
 
 
     // Calculate distances from Aurora
-    async function calculate_distances_from_aurora(locations, aurora_address) {
+    async function calculate_distances_from_aurora(locations_admin, aurora_address) {
         const aurora_coordinates = await get_coordinates(aurora_address);
 
         // Fetch coordinates and calculate distance for each location
-        const results = await Promise.all(locations.map(async location => {
+        const results = await Promise.all(locations_admin.map(async location => {
             const destination_coordinates = await get_coordinates(location.address);
             
             if (destination_coordinates) {
@@ -424,7 +410,7 @@
     }
 
     // Run the distance calculation and log results
-    calculate_distances_from_aurora(locations, aurora_address).then(results => {
+    calculate_distances_from_aurora(locations_admin, aurora_address).then(results => {
         console.log(results);
     });
 </script>

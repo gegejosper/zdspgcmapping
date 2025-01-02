@@ -13,6 +13,8 @@ class FrontController extends Controller
 {
     public function index(){
         $campuses = Campus::all(['campus_name', 'map_color', 'address', 'id']);
+        $courses = Course::all(['id', 'course_name']); // Preload courses
+        $scholarships = Scholarship::all(['id', 'scholarship_name']); // Preload scholarships
         $students = Student::with('course_details', 'campus_details', 'scholarship_details')
             ->where('status', 'active')
             ->get(['municipality', 'province', 'campus_id', 'course_id', 'scholarship_id'])
@@ -23,33 +25,53 @@ class FrontController extends Controller
         $campus_address = 'Aurora, Zamboanga del Sur';
         $origin_coordinates = $this->getCoordinates($campus_address);
         $locations_list = array();
-        foreach($students as $location => $student_group){
+        foreach ($students as $location => $student_group) {
             $destination_coordinates = $this->getCoordinates($location);
     
             if (!$origin_coordinates || !$destination_coordinates) {
-                //return response()->json(['error' => 'Unable to find coordinates for one or both locations'], 400);
                 $distance_km = 'n/a';
+            } else {
+                $distance_km = $this->calculateDistance($origin_coordinates, $destination_coordinates);
             }
     
-            // Get the distance between the coordinates using Mapbox Directions API
-            $distance_km = $this->calculateDistance($origin_coordinates, $destination_coordinates);
-
-            $location_data = [
+            $campus_data = [];
+            foreach ($student_group->groupBy('campus_id') as $campus_id => $group) {
+                $campus = $campuses->firstWhere('id', $campus_id);
+    
+                if ($campus) {
+                    $campus_data[] = [
+                        'campus_name' => $campus->campus_name,
+                        'campus_count' => $group->count(),
+                        'programs' => $group->groupBy('course_id')->map(function ($program_group, $course_id) use ($courses) {
+                            //$course = Course::find($course_id); // Assuming a Course model exists
+                            $course = $courses->firstWhere('id', $course_id);
+                            return [
+                                'course_name' => $course->course_name ?? 'Unknown',
+                                'count' => $program_group->count()
+                            ];
+                        })->values(),
+                        'scholarships' => $group->groupBy('scholarship_id')->map(function ($scholarship_group, $scholarship_id) use ($scholarships){
+                            //$scholarship = Scholarship::find($scholarship_id); // Assuming a Scholarship model exists
+                            $scholarship = $scholarships->firstWhere('id', $scholarship_id);
+                            return [
+                                'scholarship_name' => $scholarship->scholarship_name ?? 'Unknown',
+                                'count' => $scholarship_group->count()
+                            ];
+                        })->values()
+                    ];
+                }
+            }
+            //dd($campus_data);
+            $locations_list[] = [
                 'address' => $location,
                 'address_count' => $student_group->count(),
                 'distance' => $distance_km,
-                'campuses' => []
+                'campuses' => $campus_data
             ];
-
-            // if($distance >= $distance_km){
-                $locations_list[] = $location_data;
-            // }
-            
-
         }
         $filter_data = null;
         $main_address = $campus_address;
-
+        //dd($locations_list);
         return view('welcome', compact('campuses', 'students', 'distance', 'locations_list', 'filter_data', 'main_address'));
     }
     public function filter_campus(Request $req){

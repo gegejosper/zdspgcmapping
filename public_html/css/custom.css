@@ -22,7 +22,7 @@ width: 100%;
     }
 
 .mapboxgl-popup-content {
-    max-height: 500px; /* Set your desired maximum height */
+    max-height: 700px; /* Set your desired maximum height */
     overflow-y: auto; /* Enable vertical scrolling */
     overflow-x: hidden; /* Prevent horizontal scrolling */
 }
