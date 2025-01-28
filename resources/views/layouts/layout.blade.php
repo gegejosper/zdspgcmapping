@@ -14,6 +14,7 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/Turf.js/6.5.0/turf.min.js"></script>
         <script src='https://api.mapbox.com/mapbox-gl-js/v2.15.0/mapbox-gl.js'></script>
         <link href='https://api.mapbox.com/mapbox-gl-js/v2.15.0/mapbox-gl.css' rel='stylesheet' />
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
         @yield('scripts')
     </head>
     <body class="sb-nav-fixed">
@@ -44,6 +45,9 @@
                             </a>
                             <a class="nav-link" href="/panel/scholarships">
                                 <span class="sb-nav-link-icon"><i class="fas fa-money-check"></i></span><span class="sb-nav-link-text">Scholarships</span>
+                            </a>
+                            <a class="nav-link" href="/panel/statistics">
+                                <span class="sb-nav-link-icon"><i class="fas fa-folder"></i></span><span class="sb-nav-link-text">Statistics</span>
                             </a>
                             <a class="nav-link" href="/panel/profile">
                                 <span class="sb-nav-link-icon"><i class="fas fa-user-shield"></i></span><span class="sb-nav-link-text">Account</span>

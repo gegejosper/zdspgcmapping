@@ -213,7 +213,7 @@ class FrontController extends Controller
         //dd($course_data);
         return view('statistics', compact('course_labels', 'course_data', 'address_labels', 'address_data', 'campus_labels', 'campus_data'));
             //return view('statistics', compact('campuses'));
-        }
+    }
     //
 
     private function getCoordinates($address){

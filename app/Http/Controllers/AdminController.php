@@ -215,4 +215,41 @@ class AdminController extends Controller
        //dd($students);
         return view('students.students', compact('students', 'keyword'));
     }
+
+    public function statistics(){
+        // Fetch active students with course details
+        $students = Student::with('course_details')->where('status', 'active')->get();
+
+        // Group by course_id for courses data
+        $courses = $students->groupBy('course_id')->map->count();
+
+        $campus = $students->groupBy('campus_id')->map->count();
+
+        // $campus_labels = $campus->keys()->map(function($campus_id) {
+        //     return Campus::find($campus_id)->campus_name; // Assuming Campus has a 'name' field
+        // });
+
+        $campus_labels = $campus->keys()->map(function($campus_id) {
+            $campus = Campus::find($campus_id); // Retrieve the Campus model
+            return $campus ? $campus->campus_name : 'Unknown Campus'; // Use fallback if not found
+        });
+        $campus_data = $campus->values();
+
+        // Group by municipality and province for address data
+        $addresses = $students->groupBy(function ($item) {
+            return $item->municipality . ', ' . $item->province;
+        })->map->count();
+
+        $course_labels = $courses->keys()->map(function($course_id) {
+            $course = Course::find($course_id); // Retrieve the Course model
+            return $course ? $course->course_name : 'Unknown Course'; // Use fallback if not found
+        });
+        $course_data = $courses->values();
+
+        $address_labels = $addresses->keys();
+        $address_data = $addresses->values();
+        //dd($course_data);
+        return view('admin.statistics', compact('course_labels', 'course_data', 'address_labels', 'address_data', 'campus_labels', 'campus_data'));
+            //return view('statistics', compact('campuses'));
+    }
 }
